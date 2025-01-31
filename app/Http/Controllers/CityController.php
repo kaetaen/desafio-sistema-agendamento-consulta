@@ -13,7 +13,7 @@ class CityController extends Controller
     public function index()
     {
         try {
-            $cities = City::all();
+            $cities = City::all('id', 'nome', 'estado');
             return response()->json($cities, 200);
 
         } catch (Exception $e) {
