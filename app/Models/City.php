@@ -19,4 +19,9 @@ class City extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
 }
