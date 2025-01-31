@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
-
 class DoctorRequest extends FormRequest
 {
     /**
@@ -33,19 +32,19 @@ class DoctorRequest extends FormRequest
         }
 
         if ($this->isMethod('get')) {
-            if ($this->path == "api/medicos"){
-                $rules = [
-                    'nome' => 'string|max:255',
-                ];
-            }
-            if (Str::contains($this->path, 'cidades')) {
-                $rules = [
-                    'nome' => 'string|max:255',
-                    'id_cidade' => 'exists:cidade,id'
-                ];
+            $rules = [
+                'nome' => 'string|max:255',
+            ];
+            if ($this->route()->named('getDoctorsByCity')) {
+                $rules['id_cidade'] = 'required|integer';
             }
         }
 
         return $rules;
+    }
+
+    protected function prepareForValidation() 
+    {
+        $this->merge(['id_cidade' => $this->route('id_cidade')]);       
     }
 }

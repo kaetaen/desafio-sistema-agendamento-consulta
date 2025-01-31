@@ -23,6 +23,6 @@ Route::get('cidades', [CityController::class, 'index']);
 
 Route::get('medicos', [DoctorController::class, 'index']);
 Route::post('medicos', [DoctorController::class, 'create'])->middleware('auth:api');
-Route::get('/cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity']);
+Route::get('/cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity'])->name('getDoctorsByCity');
 
 
