@@ -22,7 +22,7 @@ class CityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'string'
+            'nome' => 'string|max:255',
         ];
     }
 }
