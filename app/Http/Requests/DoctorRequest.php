@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class DoctorRequest extends FormRequest
 {
@@ -21,8 +22,10 @@ class DoctorRequest extends FormRequest
      */
     public function rules(): array
     {
+        $rules = [];
+
         if ($this->isMethod('post')) {
-            return [
+            $rules = [
                 'nome' => 'max:255|string',
                 'especialidade' => 'string',
                 'cidade_id' => 'exists:cidade,id'
@@ -30,9 +33,19 @@ class DoctorRequest extends FormRequest
         }
 
         if ($this->isMethod('get')) {
-            return [
-                'nome' => 'string|max:255',
-            ];
+            if ($this->path == "api/medicos"){
+                $rules = [
+                    'nome' => 'string|max:255',
+                ];
+            }
+            if (Str::contains($this->path, 'cidades')) {
+                $rules = [
+                    'nome' => 'string|max:255',
+                    'id_cidade' => 'exists:cidade,id'
+                ];
+            }
         }
+
+        return $rules;
     }
 }
