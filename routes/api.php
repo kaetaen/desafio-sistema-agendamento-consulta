@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\DoctorController;
 
 Route::group([
 
@@ -19,5 +20,9 @@ Route::group([
 });
 
 Route::get('cidades', [CityController::class, 'index']);
+
+Route::get('medicos', [DoctorController::class, 'index']);
+Route::post('medicos', [DoctorController::class, 'create'])->middleware('auth:api');
+
 
 
