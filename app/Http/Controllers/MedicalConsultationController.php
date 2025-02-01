@@ -14,11 +14,7 @@ class MedicalConsultationController extends Controller
     public function create(MedicalConsultationRequest $request)
     {
         try {
-            $consultation = MedicalConsultation::create([
-                'medico_id' => $request->medico_id,
-                'paciente_id' => $request->paciente_id,
-                'data' => Carbon::now()
-            ]);
+            $consultation = MedicalConsultation::create($request->all());
             return response()->json($consultation->fresh(), 201);
 
         } catch (\Exception $e) {
