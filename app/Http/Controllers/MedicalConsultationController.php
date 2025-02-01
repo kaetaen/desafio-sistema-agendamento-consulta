@@ -11,6 +11,25 @@ class MedicalConsultationController extends Controller
 {
     use HandleExceptions;
 
+    public function index(MedicalConsultationRequest $request)
+    {
+        try {
+            $doctors = MedicalConsultation::where('medico_id', 'like', "%{$request->medico_id}%")
+                ->orderBy('id', 'ASC')
+                ->get();
+
+            if ($doctors->isEmpty()) {
+                return response()->json(['message' => 'No consultations found'], 404);
+            }
+
+            return response()->json($doctors, 200);
+
+        } catch (\Exception $e) {
+            $message = 'An error occurred when trying to list consultations';
+            return $this->handleException($e, 500, $message);    
+        }
+    }
+
     public function create(MedicalConsultationRequest $request)
     {
         try {

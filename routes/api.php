@@ -27,3 +27,4 @@ Route::get('medicos', [DoctorController::class, 'index']);
 Route::post('medicos', [DoctorController::class, 'create'])->middleware('auth:api');
 
 Route::post('medicos/consulta', [MedicalConsultationController::class, 'create']);
+Route::get('medicos/consulta', [MedicalConsultationController::class, 'index']);

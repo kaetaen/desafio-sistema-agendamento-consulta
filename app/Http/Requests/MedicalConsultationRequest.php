@@ -21,10 +21,18 @@ class MedicalConsultationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "medico_id" => "required|integer|exists:medico,id",
-            "paciente_id" =>   "required|integer|exists:paciente,id",
-            "data" => "required|date_format:Y-m-d H:i:s|after:now"
-        ];
+        if ($this->isMethod('get')) {
+            return [
+                "medico_id" => "integer|exists:medico,id"
+            ];
+        }
+
+        if ($this->isMethod('post')) {
+            return [
+                "medico_id" => "required|integer|exists:medico,id",
+                "paciente_id" =>   "required|integer|exists:paciente,id",
+                "data" => "required|date_format:Y-m-d H:i:s|after:now"
+            ];
+        }
     }
 }
