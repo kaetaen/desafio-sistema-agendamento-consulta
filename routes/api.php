@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicalConsultationController;
 
 Route::group([
 
@@ -20,9 +21,9 @@ Route::group([
 });
 
 Route::get('cidades', [CityController::class, 'index']);
+Route::get('cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity'])->name('getDoctorsByCity');
 
 Route::get('medicos', [DoctorController::class, 'index']);
 Route::post('medicos', [DoctorController::class, 'create'])->middleware('auth:api');
-Route::get('cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity'])->name('getDoctorsByCity');
 
-
+Route::post('medicos/consulta', [MedicalConsultationController::class, 'create']);
