@@ -10,7 +10,6 @@ class Doctor extends Model
     protected $table = 'medico';
 
     protected $fillable = [
-        'id',
         'nome',
         'especialidade',
         'cidade_id',

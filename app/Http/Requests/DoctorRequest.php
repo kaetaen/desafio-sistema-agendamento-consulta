@@ -36,7 +36,7 @@ class DoctorRequest extends FormRequest
                 'nome' => 'string|max:255',
             ];
             if ($this->route()->named('getDoctorsByCity')) {
-                $rules['id_cidade'] = 'required|integer';
+                $rules['id_cidade'] = 'required|integer|exists:cidade,id';
             }
         }
 
