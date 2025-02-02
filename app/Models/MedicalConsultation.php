@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,4 +15,15 @@ class MedicalConsultation extends Model
         'paciente_id',
         'data'
     ];
+
+    public function medico()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
+
+    public function paciente()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
 }

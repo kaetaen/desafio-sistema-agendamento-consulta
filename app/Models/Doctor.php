@@ -25,4 +25,9 @@ class Doctor extends Model
     {
         return $this->belongsTo(City::class, 'cidade_id');
     }
+
+    public function consultas()
+    {
+        return $this->hasMany(MedicalConsultation::class, 'medico_id');
+    }
 }
