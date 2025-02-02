@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalConsultationController;
+use App\Http\Controllers\PatientController;
 
 Route::group([
 
@@ -21,10 +21,19 @@ Route::group([
 });
 
 Route::get('cidades', [CityController::class, 'index']);
-Route::get('cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity'])->name('getDoctorsByCity');
-
+Route::get('cidades/{id_cidade}/medicos', [DoctorController::class, 'getDoctorsByCity'])
+    ->name('getDoctorsByCity');
 Route::get('medicos', [DoctorController::class, 'index']);
-Route::post('medicos', [DoctorController::class, 'create'])->middleware('auth:api');
 
-Route::post('medicos/consulta', [MedicalConsultationController::class, 'create']);
-Route::get('medicos/consulta', [MedicalConsultationController::class, 'index']);
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('medicos', [DoctorController::class, 'create']);
+    
+    Route::post('medicos/consulta', [MedicalConsultationController::class, 'create'])->middleware('auth:api');
+    Route::get('medicos/consulta', [MedicalConsultationController::class, 'index'])->middleware('auth:api');
+    Route::get('medicos/{id_medico}/pacientes', [MedicalConsultationController::class, 'getPatients'])
+        ->name('getPatients');
+
+    Route::post('pacientes', [PatientController::class, 'create']);
+    Route::put('pacientes/{id_paciente}', [PatientController::class, 'update']);
+});
+
