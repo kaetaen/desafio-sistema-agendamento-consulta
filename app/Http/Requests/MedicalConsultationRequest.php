@@ -22,9 +22,15 @@ class MedicalConsultationRequest extends FormRequest
     public function rules(): array
     {
         if ($this->isMethod('get')) {
-            return [
-                "medico_id" => "integer|exists:medico,id"
-            ];
+            if ($this->route()->named('getPatients')) {
+                return [
+                    "apenas_agendadas" => "in:true,false"
+                ];
+            } else {
+                return [
+                    "medico_id" => "integer|exists:medico,id"
+                ];
+            }
         }
 
         if ($this->isMethod('post')) {
